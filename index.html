@@ -3,9 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Code Quiz</title>
 </head>
 <body>
-    
+    <header>
+        <nav class="header__div__link">
+            <a href="/high-scores">View high scores</a>
+        </nav>
+        <div class="header__div__timer">
+            <strong>Time: <span id="timer">0</span></strong> 
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="intro-wrapper">
+            <h1>Coding Quiz Challenge</h1>
+            <p class="main__title__paragraph">
+                Try to answer the following code-related quesitons within the time limit.
+                Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+            </p>
+            <button class="btn btn-large" id="start-quiz">
+                Start Quiz
+            </button>
+        </div>
+
+        <div id="question-wrapper">
+            <div class="div__question">
+                <p class="" id="question"></p>
+            </div>
+            <div class="options-wrapper" id="options">
+            </div>
+            <div id="message-wrapper">
+            </div>
+        </div>
+    </main>
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>

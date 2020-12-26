@@ -1,0 +1,111 @@
+/* Global Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Variables */
+:root {
+    --color-primary: #351c75;
+    --color-secondary: #bd60e7;
+    --color-background: #fff;
+    --font-size-main-title: 3.0rem;
+    --font-size-question: 2.2rem;
+    --font-size-main-paragraph: 1.6rem;
+    --font-size-header: 1.2rem;
+}
+
+/* Start of Styling of HTML default tags */
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--color-background);
+    font-family: sans-serif;
+}
+
+/* HEADER SECTION - START */
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 80px;
+    margin: 20px 40px;
+}
+
+.header__div__link a {
+    text-decoration: none;
+    color: var(--color-secondary);
+}
+
+.header__div__link a, .header__div__timer {
+    font-weight: 500;
+    font-size: var(--font-size-header);
+}
+
+/* HEADER SECTION - END */
+
+/* MAIN SECTION - START */
+main {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+main h1 {
+    font-size: var(--font-size-main-title);
+    padding-bottom: 20px;
+}
+
+main .main__title__paragraph {
+    font-size: var(--font-size-main-paragraph);
+    padding: 20px 0 40px 0;
+    line-height: 2rem;
+}
+
+.btn {
+    background-color: var(--color-primary);
+    border-radius: 5px;
+    color: var(--color-background);
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    line-height: 1.5rem;
+}
+
+.btn-large {
+    margin: 15px 15px;
+    padding: 12px 25px;
+    font-size: var(--font-size-main-paragraph);
+}
+
+.btn-sm {
+    margin: 5px 10px;
+    padding: 10px 20px;
+    font-size: var(--font-size-header);
+    min-width: 250px;
+    text-align: left;
+}
+
+.btn:hover {
+    background-color: var(--color-secondary);
+} 
+
+.div__question {
+    text-align: left;
+    font-size: var(--font-size-question);
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+.options-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+
+/* MAIN SECTION - END */

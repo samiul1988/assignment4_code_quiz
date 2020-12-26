@@ -26,11 +26,12 @@ THEN I can save my initials and score
 ```
 
 ### Expected Final Outcome (Obtained from assignment instruction)
-![password generator demo](./assets/iamges/04-web-apis-homework-demo.gif)
+![password generator demo](./assets/images/04-web-apis-homework-demo.gif)
 
 ## My Actions and Notes
 
-* Obtained the starter code from Gitlab repo.
+* Created the project from scratch.
+* Used 10 questions in the question set.
 * Modified the javascript file to meet the acceptance criteria
 * Basic considerations were as follows:
     * When the user clicks "Generate Password" button, a series of prompt appears to collect length and character type information.
