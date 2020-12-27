@@ -35,14 +35,20 @@ header {
     margin: 20px 40px;
 }
 
-.header__div__link a {
-    text-decoration: none;
+.nav-link {
+    cursor: pointer;
+    border: none;
+    background-color: var(--color-background);
     color: var(--color-secondary);
 }
 
-.header__div__link a, .header__div__timer {
+.nav-link, .header__div__timer {
     font-weight: 500;
     font-size: var(--font-size-header);
+}
+
+.nav-link:focus {
+    outline: none;
 }
 
 /* HEADER SECTION - END */
@@ -90,6 +96,12 @@ main .main__title__paragraph {
     text-align: left;
 }
 
+.btn-xs {
+    margin: 5px 5px;
+    padding: 5px 12px;
+    font-size: var(--font-size-header);
+}
+
 .btn:hover {
     background-color: var(--color-secondary);
 } 
@@ -108,4 +120,68 @@ main .main__title__paragraph {
     text-align: left;
 }
 
+#message-wrapper, #result-wrapper, #score-wrapper {
+    display: none;
+}
+
+.div__message {
+    margin-top: 20px;
+    text-align: left;
+    color: rgba(128, 128, 128, 0.7);
+}
+
+.div__message p {
+    padding-top: 10px;
+    font-size: var(--font-size-main-paragraph);
+}
+
+.btn-container:last-child {
+    margin-bottom: 10px;
+}
+
+.final-score {
+    text-align: left;
+    font-size: var(--font-size-main-paragraph);
+}
+
+.entry-form {
+    margin: 20px auto;
+    text-align: left;
+    font-size: var(--font-size-main-paragraph);
+}
+
+.entry-form input[type=text] {
+    width: 250px;
+    line-height: 2rem;
+    position: relative;
+    top: -3px;
+    margin: 0 10px 0 5px;
+    border: 1px solid grey;
+    font-size: var(--font-size-header);
+    padding: 3px 5px;
+}
+
+#score-wrapper{
+    margin-top: 80px;
+}
+
+#score-list {
+    list-style: none;
+    text-align: left;
+    width: 100%;
+    margin: 10px 0 15px 0;    
+}
+
+#score-list li {
+    margin: 5px 0;
+    padding: 8px 5px;;
+}
+
+#score-list li:nth-child(2n - 1) {
+    background-color: rgba(53, 28, 117, 0.3);
+}
+
+.button-wrapper {
+    text-align: left;
+}
 /* MAIN SECTION - END */

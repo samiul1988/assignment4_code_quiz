@@ -9,7 +9,7 @@
 <body>
     <header>
         <nav class="header__div__link">
-            <a href="/high-scores">View high scores</a>
+            <button id="show-score" class="nav-link">View high scores</button>
         </nav>
         <div class="header__div__timer">
             <strong>Time: <span id="timer">0</span></strong> 
@@ -30,11 +30,54 @@
 
         <div id="question-wrapper">
             <div class="div__question">
-                <p class="" id="question"></p>
+                <p id="question"></p>
             </div>
             <div class="options-wrapper" id="options">
             </div>
             <div id="message-wrapper">
+                <div class="div__message">
+                    <hr />
+                    <p> <em> <span id="message"></span> </em> </p>
+                 </div>
+            </div>
+        </div>
+
+        <div id="result-wrapper">
+            <div class="div__question">
+                <p>All done!</p>
+            </div>
+            <div class="final-score">
+                <p>Your final score is <span id="score"></span>.</p>
+            </div>
+            <form class="entry-form">
+                <label for="input-initial">Enter Initials: </label>
+                <input id="input-initial" type="text"/>
+                <button class="btn btn-xs" id="submit-form">Submit</button>
+            </form>
+        </div>
+
+        <div id="score-wrapper">
+            <div class="div__question">
+                <p>High scores</p>
+            </div>
+            <div class="score-list-wrapper">
+                <ul id="score-list">
+                    <!-- <li>1. SC - 22</li>
+                    <li>1. SC - 23</li>
+                    <li>1. SC - 24</li> -->
+                </ul>
+            </div>
+            <div class="button-wrapper">
+                <button 
+                    class="btn btn-xs"
+                    id="go-back"
+                >Go back
+                </button>
+                <button 
+                    class="btn btn-xs"
+                    id="clear-scores"
+                >Clear high scores
+                </button>
             </div>
         </div>
     </main>
