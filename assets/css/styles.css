@@ -26,6 +26,11 @@ body {
     font-family: sans-serif;
 }
 
+/* Utility Class */
+.button-wrapper {
+    text-align: left;
+}
+
 /* HEADER SECTION - START */
 header {
     display: flex;
@@ -71,6 +76,7 @@ main .main__title__paragraph {
     line-height: 2rem;
 }
 
+/* General Styles of buttons */
 .btn {
     background-color: var(--color-primary);
     border-radius: 5px;
@@ -82,12 +88,19 @@ main .main__title__paragraph {
     line-height: 1.5rem;
 }
 
+/* button hover state */
+.btn:hover {
+    background-color: var(--color-secondary);
+}
+
+/* Large buttons */
 .btn-large {
     margin: 15px 15px;
     padding: 12px 25px;
     font-size: var(--font-size-main-paragraph);
 }
 
+/* Small buttons */
 .btn-sm {
     margin: 5px 10px;
     padding: 10px 20px;
@@ -96,16 +109,16 @@ main .main__title__paragraph {
     text-align: left;
 }
 
+/* Extra small buttons */
 .btn-xs {
     margin: 5px 5px;
     padding: 5px 12px;
     font-size: var(--font-size-header);
+    position: relative;
+    top: -3px;
 }
 
-.btn:hover {
-    background-color: var(--color-secondary);
-} 
-
+/* Question container */
 .div__question {
     text-align: left;
     font-size: var(--font-size-question);
@@ -124,6 +137,7 @@ main .main__title__paragraph {
     display: none;
 }
 
+/* Message container */
 .div__message {
     margin-top: 20px;
     text-align: left;
@@ -139,6 +153,7 @@ main .main__title__paragraph {
     margin-bottom: 10px;
 }
 
+/* Final Score container */
 .final-score {
     text-align: left;
     font-size: var(--font-size-main-paragraph);
@@ -165,6 +180,7 @@ main .main__title__paragraph {
     margin-top: 80px;
 }
 
+/* High Scores container */
 #score-list {
     list-style: none;
     text-align: left;
@@ -177,11 +193,8 @@ main .main__title__paragraph {
     padding: 8px 5px;;
 }
 
+/* alternative colors for rows */
 #score-list li:nth-child(2n - 1) {
     background-color: rgba(53, 28, 117, 0.3);
-}
-
-.button-wrapper {
-    text-align: left;
 }
 /* MAIN SECTION - END */

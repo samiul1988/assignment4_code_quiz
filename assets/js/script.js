@@ -52,13 +52,11 @@ const questionList = [
     // }
 ];
 
-const LOCAL_STORAGE_ITEM_SCORE_LIST = "scoreList";
-const INITIAL_TIME = 40;
-const storedScores = {
-    initials: 'SC',
-    score: 0
-};
+const LOCAL_STORAGE_ITEM_SCORE_LIST = "scoreList"; // declaration of localStorage item key
+const INITIAL_TIME = 40; // total time for quiz
+let viewScoreFlag = false; // Flag to stop timer if "view high score" button is clicked
 
+// initialize timer and question list
 var timeLeft = INITIAL_TIME;
 var quesIndex = 0;
 
@@ -75,54 +73,72 @@ let messageWrapperDivEl = document.getElementById("message-wrapper");
 let messageSpanEl = document.getElementById("message");
 let resultWrapperDivEl = document.getElementById("result-wrapper");
 let scoreSpanEl = document.getElementById("score");
-// let initialInputEl = document.getElementById("input-initial");
 let submitFormButtonEl = document.getElementById("submit-form");
 let scoreWrapperDivEl = document.getElementById("score-wrapper");
 let scoreListUlEl = document.getElementById("score-list");
 let goBackButtonEl = document.getElementById("go-back");
 let clearScoreButtonEl = document.getElementById("clear-scores");
 
-// let storeQuesListToLocalStorage = function() {
-//     // check to see if the list is already stored in localStorage
-//     // if the list is already stored, then return, otherwise store the question list
-//     let storedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEM_QUES_LIST));
-//     if (!storedList) {
-//         localStorage.setItem(LOCAL_STORAGE_ITEM_QUES_LIST, JSON.stringify(questionList));
-//     }
-// }
+// A general helper function to display appropriate elements 
+let setDisplay = function(elements, displayStyles){ 
+    elements.map((element, id) => element.style.display = displayStyles[id]);
+}
 
+// Set (and reset) timer
 let startTimer = function(){
     let timer = setInterval( function() {
-        if (timeLeft < 1) {
-            clearInterval(timer);
-            timeLeft == 0
-            timerSpanEl.textContent = timeLeft;
-            showResult();
-        } else if (quesIndex == questionList.length) {
-            clearInterval(timer);
-            showResult();
+        if (timeLeft < 1 || quesIndex === questionList.length) { // if time is up or all questions are displayed
+            clearInterval(timer);  // stop timer
+            if (timeLeft < 1) { 
+                timeLeft = 0; // set appropriate time value
+            }
+            quesIndex = 0; // reset question index
+            timerSpanEl.textContent = timeLeft; // assign updated timer value to timerSpan
+            showResult(); // display result table
+        } else if ( viewScoreFlag === true ) {
+            clearInterval(timer);  // stop timer
+            quesIndex = 0; // reset question index
+            viewScoreFlag = false; // reset flag
         } else {
-            timeLeft -= 1;
-            timerSpanEl.textContent = timeLeft;
+            timeLeft -= 1; // decrease timer value by 1
+            timerSpanEl.textContent = timeLeft; // assign updated timer value to timerSpan
         }
     } , 1000);
 }
 
+// Display final score and a form to save the score 
 var showResult = function(){
-    console.log("score: ", timeLeft < 0 ? 0 : timeLeft);
     scoreSpanEl.textContent = timeLeft;
-    questionWrapperDivEl.style.display = "none";
-    resultWrapperDivEl.style.display = "block";
+    setDisplay([questionWrapperDivEl, resultWrapperDivEl], ["none", "block"]);
 }
 
-let clickAnswer = function(event){
-    var answerId = parseInt(this.name.replace("btn-",""));
+// This function clears message after 1 s
+var clearMessage = function(){
+    setTimeout(function(){
+        setDisplay([messageWrapperDivEl], ["none"]); // clear message
+    }, 1000);
+}
 
-    if ( answerId === questionList[quesIndex].correctAnsIndex ) {
+// This function renders "Correct!" or "Wrong!" message after an answer option is selected 
+let renderMessage = function(type) {
+    if (type === "success") {
+        messageSpanEl.textContent = "Correct!";
+    } else if (type === "failure") {
+        messageSpanEl.textContent = "Wrong!";
+    }
+    setDisplay([messageWrapperDivEl], ["block"]); // show message
+    clearMessage(); // clear message
+}
+
+// Event handler for quiz option buttons
+let clickAnswer = function(event){
+    var answerId = parseInt(this.name.replace("btn-","")); // get the index of the selected option
+
+    if ( answerId === questionList[quesIndex].correctAnsIndex ) { // compare the index with correct answer index
         renderMessage('success');
     } else {
         renderMessage('failure');
-        timeLeft -= 10; // Deduct 10s (points) from the score
+        timeLeft -= 10; // Deduct 10s (points) from the score for wrond answer
     }
 
     quesIndex++; // increase index value by one (go to next question)
@@ -131,85 +147,73 @@ let clickAnswer = function(event){
     }
 }
 
+// This function displays one quiz question and associated answer options at a time
+// The function also binds click event listeners to the option buttons
 let renderQuesItem = function(){
-    var quesItem = questionList[quesIndex];
-    questionParagraphEl.textContent = quesItem.question;
-    optionsListEl.innerHTML = ""; // reset inner html
-    quesItem.options.map((option, index) => {
+    var quesItem = questionList[quesIndex]; // Get a question item from dictionary
+    questionParagraphEl.textContent = quesItem.question; // Set the question
+    optionsListEl.innerHTML = ""; // Reset inner html
+    quesItem.options.map((option, index) => { // Populate answer options
         var listItemEl = document.createElement("div");
         listItemEl.className = "btn-container";
-        listItemEl.setAttribute("id", index);
-        listItemEl.innerHTML = `<button class="btn btn-sm" name="btn-${index}"> ${index + 1}. ${option} </button>`
+        listItemEl.innerHTML = `<button class="btn btn-sm" name="btn-${index}"> ${index + 1}. ${option} </button>`;
         optionsListEl.appendChild(listItemEl);
     });
-    let btnEl = document.querySelectorAll('button[name^="btn-"]');
+    let btnEl = document.querySelectorAll('button[name^="btn-"]'); // select all option buttons
     btnEl.forEach(btn => {
-        btn.addEventListener("click", clickAnswer); // add click event listener to each option buttons
+        btn.addEventListener("click", clickAnswer); // add click event listener to each option button
     });
 }
 
-var clearMessage = function(){
-    setTimeout(function(){
-        messageWrapperDivEl.style.display = "none";
-    }, 1000);
-}
-
-let renderMessage = function(type) {
-    if (type === "success") {
-        messageSpanEl.textContent = "Correct!";
-    } else if (type === "failure") {
-        messageSpanEl.textContent = "Wrong!";
-    }
-    messageWrapperDivEl.style.display = "block";
-    clearMessage();
-}
-
-
+// Event handler for "start quiz" button
 let startQuiz = function(event){
     console.log("Quiz Started!");
-    // Hide Intro Wrapper
-    introWrapperDivEl.style.display = "none";
+    // Update View to show quiz questions
+    setDisplay([introWrapperDivEl, questionWrapperDivEl, resultWrapperDivEl, scoreWrapperDivEl], ["none", "block", "none", "none"]);
+    // initialize timer span
     timerSpanEl.textContent = timeLeft;
-    startTimer(); 
+    // Start Timer
+    startTimer();
+    // Render First Question 
     renderQuesItem();
 };
 
 let loadScores = function() {
-    headerEl.style.display = "none";
-    introWrapperDivEl.style.display = "none";
-    questionWrapperDivEl.style.display = "none";
-    resultWrapperDivEl.style.display = "none";
-    scoreWrapperDivEl.style.display = "block";
-    let storedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEM_SCORE_LIST));
-    scoreListUlEl.innerHTML = "";
+    viewScoreFlag = true;
+    // Update view
+    setDisplay([headerEl, introWrapperDivEl, questionWrapperDivEl, resultWrapperDivEl, scoreWrapperDivEl],
+        ["none", "none", "none", "none", "block"]);
+    
+    let storedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEM_SCORE_LIST)); // Get stored Score List from localStorage 
+    scoreListUlEl.innerHTML = ""; // reset score list view
     if (storedList) {
         storedList.map((item, index) => {
             let listItemEl = document.createElement("li");
             listItemEl.setAttribute("id", index);
             listItemEl.textContent = `${index + 1}. ${item.initials} - ${item.score}`;
-            scoreListUlEl.appendChild(listItemEl);
+            scoreListUlEl.appendChild(listItemEl); // insert individual Score List
         });
     } else {
         let listItemEl = document.createElement("li");
         listItemEl.textContent = "No item is saved!";
-        scoreListUlEl.appendChild(listItemEl);
+        scoreListUlEl.appendChild(listItemEl); // display "no content"
     }
 };
 
 let addScoreToLocalStorage = function(scoreItem) {
-    let storedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEM_SCORE_LIST));
-    if (!storedList) {
-        localStorage.setItem(LOCAL_STORAGE_ITEM_SCORE_LIST, JSON.stringify([scoreItem]));
-    } else {
-        storedList.push(scoreItem);
-        localStorage.setItem(LOCAL_STORAGE_ITEM_SCORE_LIST, JSON.stringify(storedList));
-    } 
+    // get the list of stored score lists from localStorage
+    let storedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEM_SCORE_LIST)) || []; 
+
+    storedList.push(scoreItem); // add new item to the list
+    localStorage.setItem(LOCAL_STORAGE_ITEM_SCORE_LIST, JSON.stringify(storedList)); // save the updated list to localStorage
 };
 
+// handler for Submit button (to save score to localStorage)
 let submitForm = function(event) {
-    event.preventDefault();
-    
-    let initialsInput = document.querySelector("#input-initial").value;
+    event.preventDefault(); // prevent default behavior
+
+    let initialsInputEl = document.querySelector("#input-initial");
+    let initialsInput = initialsInputEl.value; // Select input text for Initials
 
     // check if input is empty
     if (!initialsInput) {
@@ -219,25 +223,26 @@ let submitForm = function(event) {
 
     // add current score to local storage
     addScoreToLocalStorage({
-        initials: initialsInput,
+        initials: initialsInput.trim(),
         score: timeLeft
     });
 
-    loadScores();
+    initialsInputEl.value = ''; // reset input field
+    loadScores(); // render updated scores to the page
 };
 
+// handler for "Go Back" button
 let goBackToInitialView = function() {
     // reset all views
-    headerEl.style.display = "flex";
-    introWrapperDivEl.style.display = "block";
-    questionWrapperDivEl.style.display = "none";
-    resultWrapperDivEl.style.display = "none";
-    scoreWrapperDivEl.style.display = "none";
-    timeLeft = INITIAL_TIME;
+    setDisplay([headerEl, introWrapperDivEl, questionWrapperDivEl, resultWrapperDivEl, scoreWrapperDivEl], 
+        ["flex", "block", "none", "none", "none"]);
+    timeLeft = INITIAL_TIME; // reset timer
+    timerSpanEl.textContent = 0;
+    viewScoreFlag = false; // reset flag
 };
 
 let clearScores = function() {
-    localStorage.removeItem(LOCAL_STORAGE_ITEM_SCORE_LIST);
+    localStorage.removeItem(LOCAL_STORAGE_ITEM_SCORE_LIST); // remove localStorage entry
     alert("scroes have been cleared from localStorage!");
     loadScores();
 };

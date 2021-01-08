@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- include style sheet -->
     <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Code Quiz</title>
 </head>
 <body>
+    <!-- Start of Header -->
     <header>
         <nav class="header__div__link">
-            <button id="show-score" class="nav-link">View high scores</button>
+            <button 
+                id="show-score" 
+                class="nav-link"
+            >View high scores
+            </button>
         </nav>
         <div class="header__div__timer">
-            <strong>Time: <span id="timer">0</span></strong> 
+            <strong>
+                Time: <span id="timer">0</span>
+            </strong> 
         </div>
     </header>
+    <!-- End of Header -->
 
+    <!-- Start of Main Section -->
     <main class="main">
+        <!-- Start of Intro DIV -->
         <div id="intro-wrapper">
             <h1>Coding Quiz Challenge</h1>
             <p class="main__title__paragraph">
                 Try to answer the following code-related quesitons within the time limit.
                 Keep in mind that incorrect answers will penalize your score/time by ten seconds!
             </p>
-            <button class="btn btn-large" id="start-quiz">
-                Start Quiz
+            <button 
+                class="btn btn-large" 
+                id="start-quiz"
+            >Start Quiz
             </button>
         </div>
+        <!-- End of Intro DIV -->
 
+        <!-- Start of Question DIV -->
         <div id="question-wrapper">
             <div class="div__question">
                 <p id="question"></p>
@@ -37,11 +52,15 @@
             <div id="message-wrapper">
                 <div class="div__message">
                     <hr />
-                    <p> <em> <span id="message"></span> </em> </p>
+                    <p> 
+                        <em> <span id="message"></span> </em> 
+                    </p>
                  </div>
             </div>
         </div>
+        <!-- End of Question DIV -->
 
+        <!-- Start of Result DIV -->
         <div id="result-wrapper">
             <div class="div__question">
                 <p>All done!</p>
@@ -49,23 +68,22 @@
             <div class="final-score">
                 <p>Your final score is <span id="score"></span>.</p>
             </div>
+            <!-- form to save high score to localStorage -->
             <form class="entry-form">
                 <label for="input-initial">Enter Initials: </label>
                 <input id="input-initial" type="text"/>
                 <button class="btn btn-xs" id="submit-form">Submit</button>
             </form>
         </div>
+        <!-- End of Result DIV -->
 
+        <!-- Start of High Score DIV -->
         <div id="score-wrapper">
             <div class="div__question">
                 <p>High scores</p>
             </div>
             <div class="score-list-wrapper">
-                <ul id="score-list">
-                    <!-- <li>1. SC - 22</li>
-                    <li>1. SC - 23</li>
-                    <li>1. SC - 24</li> -->
-                </ul>
+                <ul id="score-list"></ul>
             </div>
             <div class="button-wrapper">
                 <button 
@@ -80,7 +98,11 @@
                 </button>
             </div>
         </div>
+        <!-- End of High Score DIV -->
     </main>
+    <!-- End of Main Section -->
+
+    <!-- Include javascript file -->
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
