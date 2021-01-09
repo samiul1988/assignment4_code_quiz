@@ -25,35 +25,35 @@ const questionList = [
         options: ["commas", "curly brackets", "quotes", "parenthesis"],
         correctAnsIndex: 2
     },
-    // {
-    //     question: "Inside which HTML element do we put the JavaScript?",
-    //     options: ["&#60; script &#62;", "&#60; html &#62;", "&#60; link &#62;", "&#60; js &#62;"],
-    //     correctAnsIndex: 0
-    // },
-    // {
-    //     question: "What is the correct syntax for referring to an external script called 'abcd.js'?",
-    //     options: ["&#60;script href='abcd.js'&#62;", "&#60;script id='abcd.js'&#62;", "&#60;script src='abcd.js'&#62;", "Both 2 and 3 are correct"],
-    //     correctAnsIndex: 2
-    // },
-    // {
-    //     question: "How do you call a function named 'myFunc'?",
-    //     options: ["myFunc()", "call myFunc()", "function myFunc", "console.log(myFunc)"],
-    //     correctAnsIndex: 0
-    // },
-    // {
-    //     question: "How do you write 'Hello World' in an alert box?",
-    //     options: ["alertBox('Hello World')", "msgBox('Hello World')", "msg('Hello World')", "alert('Hello World')"],
-    //     correctAnsIndex: 3
-    // },
-    // {
-    //     question: "Which are primitive data types in Javascript?",
-    //     options: ["string", "boolean", "undefined", "all of the above"],
-    //     correctAnsIndex: 3
-    // }
+    {
+        question: "Inside which HTML element do we put the JavaScript?",
+        options: ["&#60; script &#62;", "&#60; html &#62;", "&#60; link &#62;", "&#60; js &#62;"],
+        correctAnsIndex: 0
+    },
+    {
+        question: "What is the correct syntax for referring to an external script called 'abcd.js'?",
+        options: ["&#60;script href='abcd.js'&#62;", "&#60;script id='abcd.js'&#62;", "&#60;script src='abcd.js'&#62;", "Both 2 and 3 are correct"],
+        correctAnsIndex: 2
+    },
+    {
+        question: "How do you call a function named 'myFunc'?",
+        options: ["myFunc()", "call myFunc()", "function myFunc", "console.log(myFunc)"],
+        correctAnsIndex: 0
+    },
+    {
+        question: "How do you write 'Hello World' in an alert box?",
+        options: ["alertBox('Hello World')", "msgBox('Hello World')", "msg('Hello World')", "alert('Hello World')"],
+        correctAnsIndex: 3
+    },
+    {
+        question: "Which are primitive data types in Javascript?",
+        options: ["string", "boolean", "undefined", "all of the above"],
+        correctAnsIndex: 3
+    }
 ];
 
 const LOCAL_STORAGE_ITEM_SCORE_LIST = "scoreList"; // declaration of localStorage item key
-const INITIAL_TIME = 40; // total time for quiz
+const INITIAL_TIME = 75; // total time for quiz
 let viewScoreFlag = false; // Flag to stop timer if "view high score" button is clicked
 
 // initialize timer and question list
@@ -108,11 +108,12 @@ let startTimer = function(){
 
 // Display final score and a form to save the score 
 var showResult = function(){
-    scoreSpanEl.textContent = timeLeft;
+    scoreSpanEl.textContent = timeLeft; // set score display value
+    // Update view
     setDisplay([questionWrapperDivEl, resultWrapperDivEl], ["none", "block"]);
 }
 
-// This function clears message after 1 s
+// This function clears message after 1s
 var clearMessage = function(){
     setTimeout(function(){
         setDisplay([messageWrapperDivEl], ["none"]); // clear message
@@ -151,7 +152,7 @@ let clickAnswer = function(event){
 // The function also binds click event listeners to the option buttons
 let renderQuesItem = function(){
     var quesItem = questionList[quesIndex]; // Get a question item from dictionary
-    questionParagraphEl.textContent = quesItem.question; // Set the question
+    questionParagraphEl.textContent = `(${quesIndex + 1} / ${questionList.length}) ${quesItem.question}`; // Set the question
     optionsListEl.innerHTML = ""; // Reset inner html
     quesItem.options.map((option, index) => { // Populate answer options
         var listItemEl = document.createElement("div");
@@ -179,6 +180,7 @@ let startQuiz = function(event){
 };
 
 let loadScores = function() {
+    // Set score flag to reset timer
     viewScoreFlag = true;
     // Update view
     setDisplay([headerEl, introWrapperDivEl, questionWrapperDivEl, resultWrapperDivEl, scoreWrapperDivEl],
@@ -186,14 +188,15 @@ let loadScores = function() {
     
     let storedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ITEM_SCORE_LIST)); // Get stored Score List from localStorage 
     scoreListUlEl.innerHTML = ""; // reset score list view
-    if (storedList) {
+    
+    if (storedList) { // if there are values in the list, then display the stored values 
         storedList.map((item, index) => {
             let listItemEl = document.createElement("li");
             listItemEl.setAttribute("id", index);
             listItemEl.textContent = `${index + 1}. ${item.initials} - ${item.score}`;
             scoreListUlEl.appendChild(listItemEl); // insert individual Score List
         });
-    } else {
+    } else { // if there is no value stored in the list, then show no content message
         let listItemEl = document.createElement("li");
         listItemEl.textContent = "No item is saved!";
         scoreListUlEl.appendChild(listItemEl); // display "no content"
@@ -212,7 +215,7 @@ let addScoreToLocalStorage = function(scoreItem) {
 let submitForm = function(event) {
     event.preventDefault(); // prevent default behavior
 
-    let initialsInputEl = document.querySelector("#input-initial");
+    let initialsInputEl = document.querySelector("#input-initial"); // select text input that contanis person's initials
     let initialsInput = initialsInputEl.value; // Select input text for Initials
 
     // check if input is empty
@@ -237,16 +240,17 @@ let goBackToInitialView = function() {
     setDisplay([headerEl, introWrapperDivEl, questionWrapperDivEl, resultWrapperDivEl, scoreWrapperDivEl], 
         ["flex", "block", "none", "none", "none"]);
     timeLeft = INITIAL_TIME; // reset timer
-    timerSpanEl.textContent = 0;
+    timerSpanEl.textContent = 0; // reset timer span
     viewScoreFlag = false; // reset flag
 };
 
 let clearScores = function() {
     localStorage.removeItem(LOCAL_STORAGE_ITEM_SCORE_LIST); // remove localStorage entry
     alert("scroes have been cleared from localStorage!");
-    loadScores();
+    loadScores(); // update view
 };
 
+// Add click event listeners to different buttons
 showScoreButtonEl.addEventListener("click", loadScores);
 startQuizButtonEl.addEventListener("click", startQuiz);
 submitFormButtonEl.addEventListener("click", submitForm);

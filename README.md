@@ -31,15 +31,12 @@ THEN I can save my initials and score
 ## My Actions and Notes
 
 * Created the project from scratch.
-* Used 10 questions in the question set.
-* Modified the javascript file to meet the acceptance criteria
+* Used 10 questions in the question set and 75s for total quiz time.
 * Basic considerations were as follows:
-    * When the user clicks "Generate Password" button, a series of prompt appears to collect length and character type information.
-    * The inputs are validated on-the-fly and information is stored in a global object
-    * If a particular character type is selected, then it is ensured that at least one character of that type will be present in the password
-    * The characters were selected randomly from appropriate list of characters 
-* I included "space" as part of special character set (may not be used in practice, but I considered all characters mentioned in [here](https://owasp.org/www-community/password-special-characters))
-* The task can be completed in different ways; however, I tried to use a similar structure that was presented in Module 3 lessons
+    * I used one html page for all the views, and used javascript to selectively display or hide appropriate views when different buttons are clicked.
+    * When the user clicks "Start Quiz" button, a timer gets started and questions are displayed in sequence.
+    * A message is shown at the bottom of the quiz panel showing "Correct!" or "Wrong!" after an answer option is clicked.
+    * At any point, if the "View high scores" button is clicked, then the high score table is displayed and the quiz gets reset.
 
 ### Repository URL
-[Click here to see the final outcome](https://samiul1988.github.io/assignment3_password_generator/)
+[Click here to see the final outcome](https://samiul1988.github.io/assignment4_code_quiz/)

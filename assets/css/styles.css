@@ -153,7 +153,7 @@ main .main__title__paragraph {
     margin-bottom: 10px;
 }
 
-/* Final Score container */
+/* Final Result container */
 .final-score {
     text-align: left;
     font-size: var(--font-size-main-paragraph);
